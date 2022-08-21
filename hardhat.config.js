@@ -22,9 +22,12 @@ task("accounts", "Prints the list of accounts", async (taskArgs, hre) => {
  * @type import('hardhat/config').HardhatUserConfig
  */
 module.exports = {
-    solidity: "0.8.8",
+    // solidity: "0.8.8",
+    solidity: {
+        compilers: [{ version: "0.8.8" }, { version: "0.6.6" }],
+    },
+    defaultNetwork: "hardhat",
     networks: {
-        defaultNetwork: "hardhat",
         ropsten: {
             url: process.env.ROPSTEN_URL || "",
             accounts:
@@ -53,3 +56,8 @@ module.exports = {
         },
     },
 }
+
+// set proxy(for downloading compiler)
+const { ProxyAgent, setGlobalDispatcher } = require("undici")
+const proxyAgent = new ProxyAgent("http://127.0.0.1:7890") // change to yours
+setGlobalDispatcher(proxyAgent)
