@@ -36,11 +36,29 @@ module.exports = {
                     : [
                           /* privateKey0, privateKey1, privateKey2 */
                       ],
+            chainId: 3,
+        },
+        rinkeby: {
+            url: process.env.RINKEBY_RPC_URL,
+            accounts: [process.env.PRIVATE_KEY],
+            chainId: 4,
+        },
+        goerli: {
+            url: process.env.GOERLI_RPC_URL,
+            accounts: [process.env.PRIVATE_KEY],
+            chainId: 5,
+        },
+        localhost: {
+            url: "http://127.0.0.1:8545/",
+            // accounts: [], // Thanks hardhat!
+            chainId: 31337,
         },
     },
     gasReporter: {
         enabled: process.env.REPORT_GAS !== undefined,
         currency: "USD",
+        coinmarketcap: process.env.COINMARKETCAP_API_KEY,
+        token: "MATIC",
     },
     etherscan: {
         apiKey: process.env.ETHERSCAN_API_KEY,

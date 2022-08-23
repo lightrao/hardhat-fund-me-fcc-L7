@@ -53,9 +53,9 @@ contract FundMe {
             funderIndex++
         ) {
             address funder = funders[funderIndex];
-            addressToAmountFunded[funder] = 0;
+            addressToAmountFunded[funder] = 0; // reset map structure's value to 0
         }
-        funders = new address[](0);
+        funders = new address[](0); // funders point to recreated array which include 0 items
         // // transfer
         // payable(msg.sender).transfer(address(this).balance);
         // // send
