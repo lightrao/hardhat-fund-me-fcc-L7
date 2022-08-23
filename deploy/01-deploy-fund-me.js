@@ -1,5 +1,6 @@
 const { network } = require("hardhat")
 const { networkConfig, developmentChains } = require("../helper-hadhat-config")
+const { verify } = require("../utils/verify")
 
 // function deployFunc(hre) {
 //     console.log(hre)
@@ -24,16 +25,25 @@ module.exports = async ({ getNamedAccounts, deployments }) => {
         ethUsdPriceFeedAdress = networkConfig[chainId]["ethUsdPriceFeed"]
     }
 
+    const args = [ethUsdPriceFeedAdress]
     const fundMe = await deploy(
         "FundMe", // file name
         {
             contract: "FundMe", // contract name
             from: deployer,
-            args: [ethUsdPriceFeedAdress], // put price feed addresss
+            args: args, // put price feed addresss
             log: true,
         }
     )
     // log("FundMe deployed:", fundMe)
+
+    if (
+        !developmentChains.includes(network.name) &&
+        process.env.ETHERSCAN_API_KEY
+    ) {
+        // verify
+        await verify(fundMe.address, args)
+    }
     log("----".repeat(10))
 }
 module.exports.tags = ["all", "fundme"]
