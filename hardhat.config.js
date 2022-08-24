@@ -42,11 +42,13 @@ module.exports = {
             url: process.env.RINKEBY_RPC_URL,
             accounts: [process.env.PRIVATE_KEY],
             chainId: 4,
+            blockConfirmations: 6,
         },
         goerli: {
             url: process.env.GOERLI_RPC_URL,
             accounts: [process.env.PRIVATE_KEY],
             chainId: 5,
+            blockConfirmations: 6,
         },
         localhost: {
             url: "http://127.0.0.1:8545/",
@@ -55,7 +57,7 @@ module.exports = {
         },
     },
     gasReporter: {
-        enabled: process.env.REPORT_GAS !== undefined,
+        enabled: true,
         currency: "USD",
         coinmarketcap: process.env.COINMARKETCAP_API_KEY,
         token: "MATIC",
@@ -76,6 +78,6 @@ module.exports = {
 }
 
 // set proxy(for downloading compiler)
-const { ProxyAgent, setGlobalDispatcher } = require("undici")
-const proxyAgent = new ProxyAgent("http://127.0.0.1:7890") // change to yours
-setGlobalDispatcher(proxyAgent)
+// const { ProxyAgent, setGlobalDispatcher } = require("undici")
+// const proxyAgent = new ProxyAgent("http://127.0.0.1:7890") // change to yours
+// setGlobalDispatcher(proxyAgent)

@@ -33,6 +33,7 @@ module.exports = async ({ getNamedAccounts, deployments }) => {
             from: deployer,
             args: args, // put price feed addresss
             log: true,
+            waitConfirmations: network.config.blockConfirmations || 1,
         }
     )
     // log("FundMe deployed:", fundMe)
