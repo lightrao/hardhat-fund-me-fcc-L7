@@ -58,6 +58,7 @@ describe("FundMe", function () {
             // act
             const transactionResponse = await fundMe.withdraw()
             const transactionReceipt = await transactionResponse.wait(1)
+            // <- breakpoint: see transactionReceipt include gasUsed & effectiveGasPrice property
             const { gasUsed, effectiveGasPrice } = transactionReceipt
             const gasCost = gasUsed.mul(effectiveGasPrice)
 
