@@ -60,9 +60,9 @@ describe("FundMe", function () {
             const transactionReceipt = await transactionResponse.wait(1)
             // <- breakpoint: see transactionReceipt include gasUsed & effectiveGasPrice property
             const { gasUsed, effectiveGasPrice } = transactionReceipt
-            const gasCost = gasUsed.mul(effectiveGasPrice)
+            const gasCost = gasUsed.mul(effectiveGasPrice) // use big number function to multiply
 
-            const endingFundMeBalance = await fundMe.provider.getBalance(
+            const endingFundMeBalance = await ethers.provider.getBalance(
                 fundMe.address
             )
             const endingDeployerBalance = await fundMe.provider.getBalance(
