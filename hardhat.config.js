@@ -57,10 +57,12 @@ module.exports = {
         },
     },
     gasReporter: {
-        enabled: false,
-        currency: "USD",
-        coinmarketcap: process.env.COINMARKETCAP_API_KEY,
-        token: "MATIC",
+        enabled: true,
+        // outputFile: "gas-report.txt",
+        // noColors: true,
+        // currency: "USD",
+        // coinmarketcap: process.env.COINMARKETCAP_API_KEY,
+        // token: "MATIC",
     },
     etherscan: {
         apiKey: process.env.ETHERSCAN_API_KEY,

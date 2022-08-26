@@ -3,7 +3,7 @@ const {
     developmentChains,
     DECIMALS,
     INITIAL_ANSWER,
-} = require("../helper-hadhat-config")
+} = require("../helper-hardhat-config")
 
 // async function deployFunc(hre) {
 //     console.log("Hi!")
