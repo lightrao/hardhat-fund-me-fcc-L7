@@ -1,110 +1,110 @@
 {
-  "address": "0x57Ebeb007526b59345d1c1fDe766C2eBF7669E82",
-  "abi": [
-    {
-      "inputs": [],
-      "stateMutability": "nonpayable",
-      "type": "constructor"
-    },
-    {
-      "inputs": [],
-      "name": "doStuff",
-      "outputs": [],
-      "stateMutability": "view",
-      "type": "function"
-    }
-  ],
-  "transactionHash": "0xa43f153668dc13609083ec84abe9ffc81ace5b486ac2e7b7304c0cff9e928b61",
-  "receipt": {
-    "to": null,
-    "from": "0xB5556200DbFe796370b2a131E106Ba87df39d881",
-    "contractAddress": "0x57Ebeb007526b59345d1c1fDe766C2eBF7669E82",
-    "transactionIndex": 16,
-    "gasUsed": "227342",
-    "logsBloom": "0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
-    "blockHash": "0x1156e7d35b57241af1fd80f3ecffae3f2e04cbdede9a87a849821a9e0e1cf1c4",
-    "transactionHash": "0xa43f153668dc13609083ec84abe9ffc81ace5b486ac2e7b7304c0cff9e928b61",
-    "logs": [],
-    "blockNumber": 11274215,
-    "cumulativeGasUsed": "6868603",
-    "status": 1,
-    "byzantium": true
-  },
-  "args": [],
-  "numDeployments": 1,
-  "solcInputHash": "285e24d8f42c8899f04d9b7b087a97a9",
-  "metadata": "{\"compiler\":{\"version\":\"0.8.8+commit.dddeac2f\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"inputs\":[],\"name\":\"doStuff\",\"outputs\":[],\"stateMutability\":\"view\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"contracts/exampleContracts/FunWithStorage.sol\":\"FunWithStorage\"},\"evmVersion\":\"london\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\",\"useLiteralContent\":true},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"contracts/exampleContracts/FunWithStorage.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\npragma solidity ^0.8.0;\\n\\n// https://docs.soliditylang.org/en/v0.8.15/internals/layout_in_storage.html\\ncontract FunWithStorage {\\n    uint256 favoriteNumber; // Stored at slot 0\\n    bool someBool; // Stored at slot 1\\n    uint256[] myArray; /* Array Length Stored at slot 2, but the objects will be located starting at keccak256(2)(since 2 is the storage slot of the array)\\n    and it is laid out One element after the other */\\n    mapping(uint256 => bool) myMap; /* An empty slot is held at slot 3\\n    and the elements will be stored at keccak256(h(k) . p)\\n    p: The storage slot (aka, 3)\\n    k: The key in hex\\n    h: Some function based on the type. For uint256, it just pads the hex\\n    */\\n    uint256 constant NOT_IN_STORAGE = 123;\\n    uint256 immutable i_not_in_storage;\\n\\n    constructor() {\\n        favoriteNumber = 25; // See stored spot above // SSTORE\\n        someBool = true; // See stored spot above // SSTORE\\n        myArray.push(222); // SSTORE\\n        myMap[0] = true; // SSTORE\\n        i_not_in_storage = 123;\\n    }\\n\\n    function doStuff() public view {\\n        uint256 newVar = favoriteNumber + 1; // SLOAD\\n        bool otherVar = someBool; // SLOAD\\n        // ^^ memory variables\\n    }\\n}\\n\",\"keccak256\":\"0x9cfb77e5bdeb888ed765324f8ee81458db713a6872d817c91bfd774b6a66ba55\",\"license\":\"MIT\"}},\"version\":1}",
-  "bytecode": "0x60a060405234801561001057600080fd5b50601960008190555060018060006101000a81548160ff021916908315150217905550600260de908060018154018082558091505060019003906000526020600020016000909190919091505560016003600080815260200190815260200160002060006101000a81548160ff021916908315150217905550607b6080818152505060805161011c6100aa6000396000505061011c6000f3fe6080604052348015600f57600080fd5b506004361060285760003560e01c8063874f33a114602d575b600080fd5b60336035565b005b60006001600054604491906097565b90506000600160009054906101000a900460ff1690505050565b6000819050919050565b7f4e487b7100000000000000000000000000000000000000000000000000000000600052601160045260246000fd5b600060a082605e565b915060a983605e565b9250827fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff0382111560db5760da6068565b5b82820190509291505056fea264697066735822122055254b90ccea288c8ec1fc38d580d3a304faf2c54181df18d48371262d9149fb64736f6c63430008080033",
-  "deployedBytecode": "0x6080604052348015600f57600080fd5b506004361060285760003560e01c8063874f33a114602d575b600080fd5b60336035565b005b60006001600054604491906097565b90506000600160009054906101000a900460ff1690505050565b6000819050919050565b7f4e487b7100000000000000000000000000000000000000000000000000000000600052601160045260246000fd5b600060a082605e565b915060a983605e565b9250827fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff0382111560db5760da6068565b5b82820190509291505056fea264697066735822122055254b90ccea288c8ec1fc38d580d3a304faf2c54181df18d48371262d9149fb64736f6c63430008080033",
-  "devdoc": {
-    "kind": "dev",
-    "methods": {},
-    "version": 1
-  },
-  "userdoc": {
-    "kind": "user",
-    "methods": {},
-    "version": 1
-  },
-  "storageLayout": {
-    "storage": [
-      {
-        "astId": 281,
-        "contract": "contracts/exampleContracts/FunWithStorage.sol:FunWithStorage",
-        "label": "favoriteNumber",
-        "offset": 0,
-        "slot": "0",
-        "type": "t_uint256"
-      },
-      {
-        "astId": 283,
-        "contract": "contracts/exampleContracts/FunWithStorage.sol:FunWithStorage",
-        "label": "someBool",
-        "offset": 0,
-        "slot": "1",
-        "type": "t_bool"
-      },
-      {
-        "astId": 286,
-        "contract": "contracts/exampleContracts/FunWithStorage.sol:FunWithStorage",
-        "label": "myArray",
-        "offset": 0,
-        "slot": "2",
-        "type": "t_array(t_uint256)dyn_storage"
-      },
-      {
-        "astId": 290,
-        "contract": "contracts/exampleContracts/FunWithStorage.sol:FunWithStorage",
-        "label": "myMap",
-        "offset": 0,
-        "slot": "3",
-        "type": "t_mapping(t_uint256,t_bool)"
-      }
+    "address": "0x57Ebeb007526b59345d1c1fDe766C2eBF7669E82",
+    "abi": [
+        {
+            "inputs": [],
+            "stateMutability": "nonpayable",
+            "type": "constructor"
+        },
+        {
+            "inputs": [],
+            "name": "doStuff",
+            "outputs": [],
+            "stateMutability": "view",
+            "type": "function"
+        }
     ],
-    "types": {
-      "t_array(t_uint256)dyn_storage": {
-        "base": "t_uint256",
-        "encoding": "dynamic_array",
-        "label": "uint256[]",
-        "numberOfBytes": "32"
-      },
-      "t_bool": {
-        "encoding": "inplace",
-        "label": "bool",
-        "numberOfBytes": "1"
-      },
-      "t_mapping(t_uint256,t_bool)": {
-        "encoding": "mapping",
-        "key": "t_uint256",
-        "label": "mapping(uint256 => bool)",
-        "numberOfBytes": "32",
-        "value": "t_bool"
-      },
-      "t_uint256": {
-        "encoding": "inplace",
-        "label": "uint256",
-        "numberOfBytes": "32"
-      }
+    "transactionHash": "0xa43f153668dc13609083ec84abe9ffc81ace5b486ac2e7b7304c0cff9e928b61",
+    "receipt": {
+        "to": null,
+        "from": "0xB5556200DbFe796370b2a131E106Ba87df39d881",
+        "contractAddress": "0x57Ebeb007526b59345d1c1fDe766C2eBF7669E82",
+        "transactionIndex": 16,
+        "gasUsed": "227342",
+        "logsBloom": "0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+        "blockHash": "0x1156e7d35b57241af1fd80f3ecffae3f2e04cbdede9a87a849821a9e0e1cf1c4",
+        "transactionHash": "0xa43f153668dc13609083ec84abe9ffc81ace5b486ac2e7b7304c0cff9e928b61",
+        "logs": [],
+        "blockNumber": 11274215,
+        "cumulativeGasUsed": "6868603",
+        "status": 1,
+        "byzantium": true
+    },
+    "args": [],
+    "numDeployments": 1,
+    "solcInputHash": "285e24d8f42c8899f04d9b7b087a97a9",
+    "metadata": "{\"compiler\":{\"version\":\"0.8.8+commit.dddeac2f\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"inputs\":[],\"name\":\"doStuff\",\"outputs\":[],\"stateMutability\":\"view\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"contracts/exampleContracts/FunWithStorage.sol\":\"FunWithStorage\"},\"evmVersion\":\"london\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\",\"useLiteralContent\":true},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"contracts/exampleContracts/FunWithStorage.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\npragma solidity ^0.8.0;\\n\\n// https://docs.soliditylang.org/en/v0.8.15/internals/layout_in_storage.html\\ncontract FunWithStorage {\\n    uint256 favoriteNumber; // Stored at slot 0\\n    bool someBool; // Stored at slot 1\\n    uint256[] myArray; /* Array Length Stored at slot 2, but the objects will be located starting at keccak256(2)(since 2 is the storage slot of the array)\\n    and it is laid out One element after the other */\\n    mapping(uint256 => bool) myMap; /* An empty slot is held at slot 3\\n    and the elements will be stored at keccak256(h(k) . p)\\n    p: The storage slot (aka, 3)\\n    k: The key in hex\\n    h: Some function based on the type. For uint256, it just pads the hex\\n    */\\n    uint256 constant NOT_IN_STORAGE = 123;\\n    uint256 immutable i_not_in_storage;\\n\\n    constructor() {\\n        favoriteNumber = 25; // See stored spot above // SSTORE\\n        someBool = true; // See stored spot above // SSTORE\\n        myArray.push(222); // SSTORE\\n        myMap[0] = true; // SSTORE\\n        i_not_in_storage = 123;\\n    }\\n\\n    function doStuff() public view {\\n        uint256 newVar = favoriteNumber + 1; // SLOAD\\n        bool otherVar = someBool; // SLOAD\\n        // ^^ memory variables\\n    }\\n}\\n\",\"keccak256\":\"0x9cfb77e5bdeb888ed765324f8ee81458db713a6872d817c91bfd774b6a66ba55\",\"license\":\"MIT\"}},\"version\":1}",
+    "bytecode": "0x60a060405234801561001057600080fd5b50601960008190555060018060006101000a81548160ff021916908315150217905550600260de908060018154018082558091505060019003906000526020600020016000909190919091505560016003600080815260200190815260200160002060006101000a81548160ff021916908315150217905550607b6080818152505060805161011c6100aa6000396000505061011c6000f3fe6080604052348015600f57600080fd5b506004361060285760003560e01c8063874f33a114602d575b600080fd5b60336035565b005b60006001600054604491906097565b90506000600160009054906101000a900460ff1690505050565b6000819050919050565b7f4e487b7100000000000000000000000000000000000000000000000000000000600052601160045260246000fd5b600060a082605e565b915060a983605e565b9250827fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff0382111560db5760da6068565b5b82820190509291505056fea264697066735822122055254b90ccea288c8ec1fc38d580d3a304faf2c54181df18d48371262d9149fb64736f6c63430008080033",
+    "deployedBytecode": "0x6080604052348015600f57600080fd5b506004361060285760003560e01c8063874f33a114602d575b600080fd5b60336035565b005b60006001600054604491906097565b90506000600160009054906101000a900460ff1690505050565b6000819050919050565b7f4e487b7100000000000000000000000000000000000000000000000000000000600052601160045260246000fd5b600060a082605e565b915060a983605e565b9250827fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff0382111560db5760da6068565b5b82820190509291505056fea264697066735822122055254b90ccea288c8ec1fc38d580d3a304faf2c54181df18d48371262d9149fb64736f6c63430008080033",
+    "devdoc": {
+        "kind": "dev",
+        "methods": {},
+        "version": 1
+    },
+    "userdoc": {
+        "kind": "user",
+        "methods": {},
+        "version": 1
+    },
+    "storageLayout": {
+        "storage": [
+            {
+                "astId": 281,
+                "contract": "contracts/exampleContracts/FunWithStorage.sol:FunWithStorage",
+                "label": "favoriteNumber",
+                "offset": 0,
+                "slot": "0",
+                "type": "t_uint256"
+            },
+            {
+                "astId": 283,
+                "contract": "contracts/exampleContracts/FunWithStorage.sol:FunWithStorage",
+                "label": "someBool",
+                "offset": 0,
+                "slot": "1",
+                "type": "t_bool"
+            },
+            {
+                "astId": 286,
+                "contract": "contracts/exampleContracts/FunWithStorage.sol:FunWithStorage",
+                "label": "myArray",
+                "offset": 0,
+                "slot": "2",
+                "type": "t_array(t_uint256)dyn_storage"
+            },
+            {
+                "astId": 290,
+                "contract": "contracts/exampleContracts/FunWithStorage.sol:FunWithStorage",
+                "label": "myMap",
+                "offset": 0,
+                "slot": "3",
+                "type": "t_mapping(t_uint256,t_bool)"
+            }
+        ],
+        "types": {
+            "t_array(t_uint256)dyn_storage": {
+                "base": "t_uint256",
+                "encoding": "dynamic_array",
+                "label": "uint256[]",
+                "numberOfBytes": "32"
+            },
+            "t_bool": {
+                "encoding": "inplace",
+                "label": "bool",
+                "numberOfBytes": "1"
+            },
+            "t_mapping(t_uint256,t_bool)": {
+                "encoding": "mapping",
+                "key": "t_uint256",
+                "label": "mapping(uint256 => bool)",
+                "numberOfBytes": "32",
+                "value": "t_bool"
+            },
+            "t_uint256": {
+                "encoding": "inplace",
+                "label": "uint256",
+                "numberOfBytes": "32"
+            }
+        }
     }
-  }
 }
