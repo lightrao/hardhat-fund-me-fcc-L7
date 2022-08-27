@@ -22,7 +22,7 @@ describe("FundMe", function () {
     })
     describe("constructor", function () {
         it("sets the aggregator address correctly", async function () {
-            const response = await fundMe.priceFeed()
+            const response = await fundMe.s_priceFeed()
             assert.equal(response, mockV3Aggregator.address)
         })
     })
@@ -34,12 +34,12 @@ describe("FundMe", function () {
         })
         it("Updated the amount funded data structure", async function () {
             await fundMe.fund({ value: sendValue })
-            const response = await fundMe.addressToAmountFunded(deployer)
+            const response = await fundMe.s_addressToAmountFunded(deployer)
             assert.equal(response.toString(), sendValue.toString())
         })
-        it("Adds funder to array of funders", async function () {
+        it("Adds funder to array of s_funders", async function () {
             await fundMe.fund({ value: sendValue })
-            const funder = await fundMe.funders(0)
+            const funder = await fundMe.s_funders(0)
             assert.equal(funder, deployer)
         })
     })
@@ -47,6 +47,7 @@ describe("FundMe", function () {
         beforeEach(async function () {
             await fundMe.fund({ value: sendValue }) // 存钱
         })
+
         it("Withdraw ETH from a singler founder", async function () {
             // arrange
             const startingFundMeBalance = await fundMe.provider.getBalance(
@@ -76,7 +77,38 @@ describe("FundMe", function () {
                 endingDeployerBalance.add(gasCost).toString()
             )
         })
-        it("Allow us to withdraw with multiple funders", async function () {
+
+        it("Cheaper withdraw ETH from a singler founder", async function () {
+            // arrange
+            const startingFundMeBalance = await fundMe.provider.getBalance(
+                fundMe.address
+            )
+            const startingDeployerBalance = await fundMe.provider.getBalance(
+                deployer
+            )
+            // act
+            const transactionResponse = await fundMe.cheaperWithdraw()
+            const transactionReceipt = await transactionResponse.wait(1)
+            // <- breakpoint: see transactionReceipt include gasUsed & effectiveGasPrice property
+            const { gasUsed, effectiveGasPrice } = transactionReceipt
+            const gasCost = gasUsed.mul(effectiveGasPrice) // use big number function to multiply
+
+            const endingFundMeBalance = await ethers.provider.getBalance(
+                fundMe.address
+            )
+            const endingDeployerBalance = await fundMe.provider.getBalance(
+                deployer
+            )
+            // assert
+            assert.equal(endingFundMeBalance, 0)
+            // note: when call withdraw deployer spent a little bit of gas
+            assert.equal(
+                startingFundMeBalance.add(startingDeployerBalance).toString(),
+                endingDeployerBalance.add(gasCost).toString()
+            )
+        })
+
+        it("Allow us to withdraw with multiple s_funders", async function () {
             // Arrange
             const accounts = await ethers.getSigners()
             for (let i = 1; i < 6; i++) {
@@ -112,15 +144,16 @@ describe("FundMe", function () {
                 endingDeployerBalance.add(gasCost).toString()
             )
 
-            // make sure that the funders are reset properly
-            await expect(fundMe.funders(0)).to.be.reverted // withdraw function include statment: funders = new address[](0)
+            // make sure that the s_funders are reset properly
+            await expect(fundMe.s_funders(0)).to.be.reverted // withdraw function include statment: s_funders = new address[](0)
             for (let i = 1; i < 6; i++) {
                 assert.equal(
-                    await fundMe.addressToAmountFunded(accounts[i].address),
+                    await fundMe.s_addressToAmountFunded(accounts[i].address),
                     0
                 )
             }
         })
+
         it("Only allows the owner to withdraw", async function () {
             const accounts = await ethers.getSigners()
             const attacker = accounts[1] // not developer account
@@ -128,6 +161,52 @@ describe("FundMe", function () {
             await expect(
                 attackerConnectedContract.withdraw()
             ).to.be.revertedWith("FundMe__NotOwner")
+        })
+
+        it("Allow us to cheaper withdraw with multiple s_funders", async function () {
+            // Arrange
+            const accounts = await ethers.getSigners()
+            for (let i = 1; i < 6; i++) {
+                const fundMeConnectedContract = await fundMe.connect(
+                    // funMe contract connect account object not address
+                    accounts[i]
+                )
+                await fundMeConnectedContract.fund({ value: sendValue })
+            }
+
+            const startingFundMeBalance = await fundMe.provider.getBalance(
+                fundMe.address
+            )
+            const startingDeployerBalance = await fundMe.provider.getBalance(
+                deployer
+            )
+            // Act
+            const transactionResponse = await fundMe.cheaperWithdraw() // developer account withdraw
+            const transactionReceipt = await transactionResponse.wait(1)
+            const { gasUsed, effectiveGasPrice } = transactionReceipt
+            const gasCost = gasUsed.mul(effectiveGasPrice)
+
+            const endingFundMeBalance = await ethers.provider.getBalance(
+                fundMe.address
+            )
+            const endingDeployerBalance = await fundMe.provider.getBalance(
+                deployer
+            )
+            // assert
+            assert.equal(endingFundMeBalance, 0)
+            assert.equal(
+                startingFundMeBalance.add(startingDeployerBalance).toString(),
+                endingDeployerBalance.add(gasCost).toString()
+            )
+
+            // make sure that the s_funders are reset properly
+            await expect(fundMe.s_funders(0)).to.be.reverted // withdraw function include statment: s_funders = new address[](0)
+            for (let i = 1; i < 6; i++) {
+                assert.equal(
+                    await fundMe.s_addressToAmountFunded(accounts[i].address),
+                    0
+                )
+            }
         })
     })
 })
